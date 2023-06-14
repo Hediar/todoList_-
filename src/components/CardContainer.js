@@ -1,16 +1,17 @@
 import React from 'react'
 import Card from './Card'
 import './CardContainer.css'
-function CardContainer({deleteFunc, move, title, tasks}) {
+function CardContainer({deleteFunc, move, title, tasks, save}) {
     return (
-    <div className='CardContainer'>
+    <div className='card-container'>
         <h2>{title}</h2>
-        <div className='CardSection'>
+        <div className='card-section'>
             {tasks.map(task=>{
                 if(title==="working" && !task.isDone){
                     return <Card 
                     title={title} 
-                    deleteFunc={deleteFunc} 
+                    deleteFunc={deleteFunc}
+                    save={save}
                     move={move} 
                     isDone={task.isDone} 
                     id={task.id} 
@@ -22,6 +23,7 @@ function CardContainer({deleteFunc, move, title, tasks}) {
                     return <Card 
                     title={title} 
                     deleteFunc={deleteFunc} 
+                    save={save}
                     move={move} 
                     isDone={task.isDone} 
                     id={task.id} 
