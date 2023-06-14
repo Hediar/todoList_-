@@ -4,6 +4,7 @@ import { useState } from 'react';
 import uuid from 'react-uuid';
 import MyButton from '../components/MyButton';
 import { useEffect } from 'react';
+import './MainPage.css'
 function MainPage() {
   const [values, setValues] = useState({
     title:"",
@@ -30,8 +31,13 @@ function MainPage() {
   }
   const createTask=(e)=>{
     e.preventDefault();
+    if(values.title.length===0 || values.title===undefined || values.title === null
+      ||values.desc.length===0 || values.desc===undefined || values.desc === null){
+        return;
+      }
     const newList = [{id:uuid(), isDone:false, values}, ...todoList]
     setTodoList(newList);
+    setValues({title:"",desc:""});
     localStorage.setItem("todoList",JSON.stringify(newList));
   }
   const deleteTask=(id)=>{
@@ -50,20 +56,30 @@ function MainPage() {
     localStorage.setItem("todoList",JSON.stringify(newList));
     setTodoList(newList);
   }
-  
+  const saveTask=(id,obj)=>{
+    const newList = todoList.map(task=>{
+      if(task.id===id){
+        return {...task, values:{...obj}}
+      }else{
+        return {...task}
+      }
+    })
+    setTodoList(newList);
+  }
   return (
-    <div className='Content'>
+    <div className='content'>
 
-      <div className='AddForm'>
-        <form>
-          <p>제목</p><input type="text" name="title" onChange={onChange} value={values.title} />
-          <p>내용</p><input type="text" name="desc" onChange={onChange} value={values.desc} />
-          <MyButton func={createTask} title="추가하기"/>
+
+        <form className='add-form'>
+
+            <label>제목</label><input type="text" name="title" onChange={onChange} value={values.title} />
+            <label>내용</label><input type="text" name="desc" onChange={onChange} value={values.desc} />
+            <MyButton func={createTask} title="추가하기"/>
+
         </form>
-      </div>
 
-      <CardContainer deleteFunc={deleteTask} move={moveTask} title="working" tasks={todoList} />
-      <CardContainer deleteFunc={deleteTask} move={moveTask} title="done" tasks={todoList} />
+      <CardContainer deleteFunc={deleteTask} save={saveTask} move={moveTask} title="working" tasks={todoList} />
+      <CardContainer deleteFunc={deleteTask} save={saveTask} move={moveTask} title="done" tasks={todoList} />
 
     </div>
   )
