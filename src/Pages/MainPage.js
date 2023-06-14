@@ -3,6 +3,7 @@ import CardContainer from '../components/CardContainer'
 import { useState } from 'react';
 import uuid from 'react-uuid';
 import MyButton from '../components/MyButton';
+import { useEffect } from 'react';
 function MainPage() {
   const [values, setValues] = useState({
     title:"",
@@ -10,6 +11,16 @@ function MainPage() {
   });
 
   const [todoList, setTodoList] = useState([]);
+
+  useEffect(() => {
+    let prevTodoList = JSON.parse(localStorage.getItem("todoList"));
+   
+    if(prevTodoList.constructor === Array){
+      setTodoList(prevTodoList)
+    }
+  }, [])
+
+
 
   const onChange=(e)=>{
     setValues({
@@ -19,19 +30,25 @@ function MainPage() {
   }
   const createTask=(e)=>{
     e.preventDefault();
-    setTodoList([{id:uuid(), isDone:false, values}, ...todoList]);
+    const newList = [{id:uuid(), isDone:false, values}, ...todoList]
+    setTodoList(newList);
+    localStorage.setItem("todoList",JSON.stringify(newList));
   }
   const deleteTask=(id)=>{
-    setTodoList(todoList.filter(task => task.id!==id));
+    const newList = todoList.filter(task => task.id!==id)
+    setTodoList(newList);
+    localStorage.setItem("todoList",JSON.stringify(newList));
   }
   const moveTask=(id)=>{
-    setTodoList(todoList.map(task=>{
+    const newList = todoList.map(task=>{
       if(task.id===id){
         return {...task, isDone:!task.isDone}
       }else{
         return {...task}
       }
-    }));
+    })
+    localStorage.setItem("todoList",JSON.stringify(newList));
+    setTodoList(newList);
   }
   
   return (
