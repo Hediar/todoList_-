@@ -7,7 +7,7 @@ function CardContainer({deleteFunc, move, title, tasks, save}) {
         <h2>{title}</h2>
         <div className='card-section'>
             {tasks.map(task=>{
-                if(title==="working" && !task.isDone){
+                if(title==="Working" && !task.isDone){
                     return <Card 
                     title={title} 
                     deleteFunc={deleteFunc}
@@ -19,7 +19,7 @@ function CardContainer({deleteFunc, move, title, tasks, save}) {
                     desc={task.values.desc} 
                     />
                 }
-                else if(title==="done" && task.isDone){
+                else if(title==="Done" && task.isDone){
                     return <Card 
                     title={title} 
                     deleteFunc={deleteFunc} 

@@ -65,6 +65,7 @@ function MainPage() {
       }
     })
     setTodoList(newList);
+    localStorage.setItem("todoList",JSON.stringify(newList));
   }
   return (
     <div className='content'>
@@ -78,8 +79,8 @@ function MainPage() {
 
         </form>
 
-      <CardContainer deleteFunc={deleteTask} save={saveTask} move={moveTask} title="working" tasks={todoList} />
-      <CardContainer deleteFunc={deleteTask} save={saveTask} move={moveTask} title="done" tasks={todoList} />
+      <CardContainer deleteFunc={deleteTask} save={saveTask} move={moveTask} title="Working" tasks={todoList} />
+      <CardContainer deleteFunc={deleteTask} save={saveTask} move={moveTask} title="Done" tasks={todoList} />
 
     </div>
   )
