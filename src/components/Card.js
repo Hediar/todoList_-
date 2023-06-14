@@ -23,7 +23,6 @@ function Card({title, deleteFunc, move, save, isDone, id, cardTitle, desc}) {
     })
   }
   const saveCard=()=>{
-    console.log(values)
     save(id,values);
     setIsEditing(!isEditing)
   }
