@@ -14,7 +14,7 @@ https://github.com/abcd0978/todoList/assets/48148112/7eaecfd1-e88a-4f7d-bc4d-576
 
 https://github.com/abcd0978/todoList/assets/48148112/6a98a7a4-1f2e-4a22-b2ad-05cc83b81c93
 
-# 3.saving tasks in browser so that tasks won't go away when refresh browser.
+# 3.saving tasks in browser local storage so that tasks won't go away when refresh browser.
 
 https://github.com/abcd0978/todoList/assets/48148112/443a1321-bc2b-4875-afde-30d03c3449be
 
