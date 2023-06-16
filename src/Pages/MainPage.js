@@ -16,7 +16,7 @@ function MainPage() {
   useEffect(() => {
     let prevTodoList = JSON.parse(localStorage.getItem("todoList"));
    
-    if(prevTodoList.constructor === Array){
+    if(prevTodoList && prevTodoList.constructor === Array){
       setTodoList(prevTodoList)
     }
   }, [])
