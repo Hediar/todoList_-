@@ -3,7 +3,8 @@ import Card from './Card'
 import './CardContainer.css'
 import { useSelector } from 'react-redux'
 function CardContainer({title}) {
-    const tasks = useSelector((state)=>state.todo.tasks)
+    let tasks = [];
+    tasks =  useSelector((state)=>state.todo.tasks);
     return (
     <div className='card-container'>
         <h2>{title}</h2>
