@@ -1,18 +1,21 @@
 import React, { useState } from 'react'
 import './Card.css'
 import MyButton from './MyButton';
-function Card({title, deleteFunc, move, save, isDone, id, cardTitle, desc}) {
-
+import { removeTask,modifyTask,toggleTask } from '../redux/modules/todo';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+function Card({isDone, id, cardTitle, desc}) {
+  const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
   const [values, setValues] = useState({
     title:cardTitle,
     desc:desc
   })
   const moveCard = ()=> {
-    move(id);
+    dispatch(toggleTask(id))
   }
-  const deleteCard = ()=>{
-    deleteFunc(id)
+  const deleteCard=()=>{
+    dispatch(removeTask(id))
   }
   const modifyCard=()=>{
     setIsEditing(!isEditing);
@@ -23,11 +26,11 @@ function Card({title, deleteFunc, move, save, isDone, id, cardTitle, desc}) {
     })
   }
   const saveCard=()=>{
-    save(id,values);
+    dispatch(modifyTask({id,values}))
     setIsEditing(!isEditing)
   }
   return (
-    <div className='card'>
+    <div className='card' >
         {isEditing ? <input style={{//h1태그의 default style
           display: "block",
           fontSize: "2em",
@@ -36,19 +39,17 @@ function Card({title, deleteFunc, move, save, isDone, id, cardTitle, desc}) {
           marginLeft: "0",
           marginRight: "0",
           fontWeight: "bold"}} type="text" name="title" value={values.title} onChange={OnChange}/> :
-        <h1 className='card-title'>{cardTitle}</h1> }
+          <h1 className='card-title'>{cardTitle}</h1> }
         {isEditing ? <input type="text" name="desc" value={values.desc} onChange={OnChange}/>: 
         <p className='card-description'>{desc}</p> }
-
-
         <div className='control-section'>
-          
           <MyButton title="🗑️" func={deleteCard}/>
           <MyButton title={isDone ? "↩️":"✔️"} func={moveCard}/>
           {isEditing ? <MyButton title="💾" func={saveCard}/>:
           <MyButton title="📝" func={modifyCard}/>}
-          
-
+          <Link to={`/spec/${id}`}>
+            <MyButton title="ℹ️"/>
+          </Link>
         </div>
     </div>
   )

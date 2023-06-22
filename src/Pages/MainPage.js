@@ -1,28 +1,24 @@
 import React from 'react'
 import CardContainer from '../components/CardContainer'
 import { useState } from 'react';
-import uuid from 'react-uuid';
 import MyButton from '../components/MyButton';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { addTask,addTasks} from '../redux/modules/todo';
 import './MainPage.css'
 function MainPage() {
   const [values, setValues] = useState({
     title:"",
     desc:""
   });
-
-  const [todoList, setTodoList] = useState([]);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     let prevTodoList = JSON.parse(localStorage.getItem("todoList"));
-   
     if(prevTodoList && prevTodoList.constructor === Array){
-      setTodoList(prevTodoList)
+      dispatch(addTasks(prevTodoList))
     }
   }, [])
-
-
-
+  
   const onChange=(e)=>{
     setValues({
       ...values,
@@ -35,38 +31,12 @@ function MainPage() {
       ||values.desc.length===0 || values.desc===undefined || values.desc === null){
         return;
       }
-    const newList = [{id:uuid(), isDone:false, values}, ...todoList]
-    setTodoList(newList);
     setValues({title:"",desc:""});
-    localStorage.setItem("todoList",JSON.stringify(newList));
+    dispatch(addTask(values));
   }
-  const deleteTask=(id)=>{
-    const newList = todoList.filter(task => task.id!==id)
-    setTodoList(newList);
-    localStorage.setItem("todoList",JSON.stringify(newList));
-  }
-  const moveTask=(id)=>{
-    const newList = todoList.map(task=>{
-      if(task.id===id){
-        return {...task, isDone:!task.isDone}
-      }else{
-        return {...task}
-      }
-    })
-    localStorage.setItem("todoList",JSON.stringify(newList));
-    setTodoList(newList);
-  }
-  const saveTask=(id,obj)=>{
-    const newList = todoList.map(task=>{
-      if(task.id===id){
-        return {...task, values:{...obj}}
-      }else{
-        return {...task}
-      }
-    })
-    setTodoList(newList);
-    localStorage.setItem("todoList",JSON.stringify(newList));
-  }
+
+
+
   return (
     <div className='content'>
 
@@ -79,8 +49,8 @@ function MainPage() {
 
         </form>
 
-      <CardContainer deleteFunc={deleteTask} save={saveTask} move={moveTask} title="Working" tasks={todoList} />
-      <CardContainer deleteFunc={deleteTask} save={saveTask} move={moveTask} title="Done" tasks={todoList} />
+      <CardContainer title="Working" />
+      <CardContainer title="Done" />
 
     </div>
   )
