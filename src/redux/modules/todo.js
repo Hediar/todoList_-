@@ -6,9 +6,16 @@ const TOGGLE_TASK = 'TOGGLE_TASK';
 const MODIFY_TASK = 'MODIFY_TASK';
 const ADD_TASKS = 'ADD_TASKS';
 
+function getTasksFromLocalStorage(){
+    let tasks = JSON.parse(localStorage.getItem("todoList"));
+    if(!tasks){
+        return [];
+    }
+    return tasks;
+}
 // Initial State
 const initialState = {
-    tasks:JSON.parse(localStorage.getItem("todoList"))
+    tasks:getTasksFromLocalStorage()
 };
 //action creator
 export const addTask=(payload)=>{
