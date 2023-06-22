@@ -1,7 +1,9 @@
 import React from 'react'
 import Card from './Card'
 import './CardContainer.css'
-function CardContainer({deleteFunc, move, title, tasks, save}) {
+import { useSelector } from 'react-redux'
+function CardContainer({title}) {
+    const tasks = useSelector((state)=>state.todo.tasks)
     return (
     <div className='card-container'>
         <h2>{title}</h2>
@@ -10,9 +12,6 @@ function CardContainer({deleteFunc, move, title, tasks, save}) {
                 if(title==="Working" && !task.isDone){
                     return <Card 
                     title={title} 
-                    deleteFunc={deleteFunc}
-                    save={save}
-                    move={move} 
                     isDone={task.isDone} 
                     id={task.id} 
                     cardTitle={task.values.title} 
@@ -22,9 +21,6 @@ function CardContainer({deleteFunc, move, title, tasks, save}) {
                 else if(title==="Done" && task.isDone){
                     return <Card 
                     title={title} 
-                    deleteFunc={deleteFunc} 
-                    save={save}
-                    move={move} 
                     isDone={task.isDone} 
                     id={task.id} 
                     cardTitle={task.values.title} 
