@@ -5,7 +5,13 @@ import Router from "./shared/Router.js";
 import { styled, ThemeProvider, useTheme } from "styled-components";
 import MyButton from "./components/MyButton.js";
 import { useState } from "react";
-import { lightTheme, DarkTheme } from "./styles/theme.js";
+import {
+  lightTheme,
+  DarkTheme,
+  Fsmall,
+  Fmiddle,
+  Fbig,
+} from "./styles/theme.js";
 import GlobalStyle from "./styles/GlobalStyle.js";
 
 const App = () => {
@@ -14,9 +20,15 @@ const App = () => {
     setTheme(theme === lightTheme ? DarkTheme : lightTheme);
   };
 
-  const fontSizeSmall = () => {};
-  const fontSizeMiddle = () => {};
-  const fontSizeBig = () => {};
+  const fontSizeSmall = () => {
+    setTheme(Fsmall);
+  };
+  const fontSizeMiddle = () => {
+    setTheme(Fmiddle);
+  };
+  const fontSizeBig = () => {
+    setTheme(Fbig);
+  };
 
   return (
     <ThemeProvider theme={theme}>

@@ -4,6 +4,6 @@ export default createGlobalStyle`
   * {
     color: ${(props) => props.theme.color};
     background-color: ${(props) => props.theme.backgroundColor};
-    font-size: ${(props) => props.theme.fontsize};
+    font-size: ${(props) => props.theme.fontSize};
 }
 `;
